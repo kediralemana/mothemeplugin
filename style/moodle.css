@@ -1,0 +1,38 @@
+/* Moodle CSS file for Custom Theme */
+
+/* This file is loaded from theme/customtheme/style/moodle.css */
+/* It provides fallback styles if SCSS compilation is not available */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #212529;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.card {
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+    margin-bottom: 1rem;
+}
+
+.btn-primary {
+    background-color: #0f6cbf;
+    border-color: #0f6cbf;
+}
+
+.btn-primary:hover {
+    background-color: #0a4d8f;
+    border-color: #0a4d8f;
+}
+
+#page-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    padding: 2rem 0;
+    margin-top: 3rem;
+}
