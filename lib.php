@@ -38,8 +38,24 @@ function theme_customtheme_get_main_scss_content($theme) {
     $fs = get_file_storage();
 
     $context = context_system::instance();
-    $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/default.scss');
+
+    // Load the preset from boost.
+    if ($filename === 'default.scss') {
+        $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/default.scss');
+    } else if ($filename === 'plain.scss') {
+        $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/plain.scss');
+    } else if ($filename && ($presetfile = $fs->get_file($context->id, 'theme_customtheme', 'preset', 0, '/', $filename))) {
+        $scss .= $presetfile->get_content();
+    } else {
+        // Use default preset.
+        $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/default.scss');
+    }
+
+    // Load boost SCSS.
     $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/boost.scss');
+
+    // Load custom theme SCSS.
+    $scss .= file_get_contents($CFG->dirroot . '/theme/customtheme/scss/customtheme.scss');
 
     return $scss;
 }
@@ -96,30 +112,28 @@ function theme_customtheme_get_extra_scss($theme) {
 /**
  * Serves any files associated with the theme settings.
  *
- * @param stdClass $course
- * @param stdClass $cm
- * @param context $context
- * @param string $filearea
- * @param array $args
- * @param bool $forcedownload
- * @param array $options
- * @return bool
+ * @param stdClass $course The course object.
+ * @param stdClass $cm The course module object.
+ * @param context $context The context object.
+ * @param string $filearea The file area.
+ * @param array $args Extra arguments.
+ * @param bool $forcedownload Whether to force download.
+ * @param array $options Additional options.
+ * @return bool Returns true if successful, false otherwise.
  */
-function theme_customtheme_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
-    if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'logo' || $filearea === 'backgroundimage')) {
-        $theme = theme_config::load('customtheme');
-        return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
-    } else {
-        send_file_not_found();
-    }
-}
+function theme_customtheme_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
+    static $theme;
 
-/**
- * Get compiled css.
- *
- * @return string compiled css
- */
-function theme_customtheme_get_precompiled_css() {
-    global $CFG;
-    return file_get_contents($CFG->dirroot . '/theme/customtheme/style/moodle.css');
+    if (empty($theme)) {
+        $theme = theme_config::load('customtheme');
+    }
+
+    if ($context->contextlevel == CONTEXT_SYSTEM) {
+        // Serve files from the supported file areas.
+        if ($filearea === 'logo' || $filearea === 'backgroundimage' || $filearea === 'preset') {
+            return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
+        }
+    }
+
+    send_file_not_found();
 }
