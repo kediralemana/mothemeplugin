@@ -1,52 +1,129 @@
-// Custom theme styles
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Custom theme SCSS.
+ *
+ * @package    theme_customtheme
+ * @copyright  2025 Your Name <your.email@example.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+// =============================================================================
+// CUSTOM THEME STYLES
+// =============================================================================
 
 // Custom variables
-$custom-primary-color: #0f6cbf;
-$custom-secondary-color: #6c757d;
+$custom-primary-color: #0f6cbf !default;
+$custom-secondary-color: #6c757d !default;
+$custom-border-radius: 8px !default;
+$custom-box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24) !default;
+$custom-box-shadow-hover: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22) !default;
 
-// Override default styles
+// =============================================================================
+// GENERAL STYLES
+// =============================================================================
+
+// Typography
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-// Header customization
+// Background image support
+body.has-background-image {
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+// =============================================================================
+// HEADER CUSTOMIZATION
+// =============================================================================
+
 #page-header {
     background: linear-gradient(135deg, $custom-primary-color 0%, darken($custom-primary-color, 10%) 100%);
     padding: 2rem 0;
-    
+
     .page-context-header {
         color: #fff;
     }
 }
 
-// Navigation customization
-.navbar {
-    box-shadow: 0 2px 4px rgba(0,0,0,.1);
-}
+// Custom logo
+.logo {
+    max-height: 75px;
+    width: auto;
 
-// Card customization
-.card {
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-    
-    &:hover {
-        box-shadow: 0 14px 28px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.22);
+    img {
+        max-height: 75px;
+        width: auto;
     }
 }
 
-// Button customization
+// =============================================================================
+// NAVIGATION CUSTOMIZATION
+// =============================================================================
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+}
+
+.navbar-light {
+    background-color: #fff;
+}
+
+// =============================================================================
+// CARD CUSTOMIZATION
+// =============================================================================
+
+.card {
+    border-radius: $custom-border-radius;
+    box-shadow: $custom-box-shadow;
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+
+    &:hover {
+        box-shadow: $custom-box-shadow-hover;
+    }
+}
+
+.card-header {
+    background-color: rgba($custom-primary-color, .05);
+    border-bottom: 1px solid rgba($custom-primary-color, .125);
+}
+
+// =============================================================================
+// BUTTON CUSTOMIZATION
+// =============================================================================
+
 .btn-primary {
     background-color: $custom-primary-color;
     border-color: $custom-primary-color;
-    
-    &:hover {
+
+    &:hover,
+    &:focus,
+    &:active {
         background-color: darken($custom-primary-color, 10%);
         border-color: darken($custom-primary-color, 10%);
     }
 }
 
-// Footer customization
+// =============================================================================
+// FOOTER CUSTOMIZATION
+// =============================================================================
+
 #page-footer {
     background-color: #f8f9fa;
     border-top: 1px solid #dee2e6;
@@ -54,13 +131,26 @@ body {
     margin-top: 3rem;
 }
 
-// Course sections
+.custom-footer-content {
+    padding: 1rem 0;
+}
+
+// =============================================================================
+// COURSE CONTENT
+// =============================================================================
+
 .course-content {
     .section {
         margin-bottom: 2rem;
-        
+
         .content {
             padding: 1.5rem;
+        }
+
+        .sectionname {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
         }
     }
 }
@@ -70,15 +160,110 @@ body {
     border-left: 4px solid $custom-primary-color;
     padding-left: 1rem;
     margin-bottom: 1rem;
+
+    .activityinstance {
+        display: flex;
+        align-items: center;
+    }
 }
 
-// Responsive adjustments
+.activity-icon {
+    margin-right: 0.5rem;
+}
+
+// =============================================================================
+// BLOCKS
+// =============================================================================
+
+.block {
+    margin-bottom: 1.5rem;
+
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+.block-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+// =============================================================================
+// FORMS
+// =============================================================================
+
+.form-control {
+    &:focus {
+        border-color: $custom-primary-color;
+        box-shadow: 0 0 0 0.2rem rgba($custom-primary-color, .25);
+    }
+}
+
+// =============================================================================
+// ALERTS AND MESSAGES
+// =============================================================================
+
+.alert {
+    border-radius: $custom-border-radius;
+}
+
+// =============================================================================
+// RESPONSIVE ADJUSTMENTS
+// =============================================================================
+
 @media (max-width: 768px) {
     #page-header {
         padding: 1rem 0;
     }
-    
+
     .card {
         margin-bottom: 1rem;
+    }
+
+    .logo {
+        max-height: 50px;
+
+        img {
+            max-height: 50px;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .course-content .section {
+        .sectionname {
+            font-size: 1.25rem;
+        }
+    }
+}
+
+// =============================================================================
+// ACCESSIBILITY IMPROVEMENTS
+// =============================================================================
+
+// Improved focus states
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid $custom-primary-color;
+    outline-offset: 2px;
+}
+
+// Skip to content link
+.skip-to-content {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: $custom-primary-color;
+    color: #fff;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 100;
+
+    &:focus {
+        top: 0;
     }
 }

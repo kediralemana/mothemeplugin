@@ -26,7 +26,25 @@ defined('MOODLE_INTERNAL') || die();
 
 if ($ADMIN->fulltree) {
     $settings = new theme_boost_admin_settingspage_tabs('themesettingcustomtheme', get_string('configtitle', 'theme_customtheme'));
+
+    // General settings page.
     $page = new admin_settingpage('theme_customtheme_general', get_string('generalsettings', 'theme_customtheme'));
+
+    // Logo file setting.
+    $name = 'theme_customtheme/logo';
+    $title = get_string('logo', 'theme_customtheme');
+    $description = get_string('logo_desc', 'theme_customtheme');
+    $setting = new admin_setting_configstoredfile($name, $title, $description, 'logo');
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Background image setting.
+    $name = 'theme_customtheme/backgroundimage';
+    $title = get_string('backgroundimage', 'theme_customtheme');
+    $description = get_string('backgroundimage_desc', 'theme_customtheme');
+    $setting = new admin_setting_configstoredfile($name, $title, $description, 'backgroundimage');
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
 
     // Brand colour setting.
     $name = 'theme_customtheme/brandcolor';
@@ -54,6 +72,14 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
+    // Preset files upload.
+    $name = 'theme_customtheme/presetfiles';
+    $title = get_string('presetfiles', 'theme_customtheme');
+    $description = get_string('presetfiles_desc', 'theme_customtheme');
+    $setting = new admin_setting_configstoredfile($name, $title, $description, 'preset', 0,
+        ['maxfiles' => 20, 'accepted_types' => ['.scss']]);
+    $page->add($setting);
+
     // Raw SCSS to include before the content.
     $setting = new admin_setting_scsscode('theme_customtheme/scsspre',
         get_string('rawscsspre', 'theme_customtheme'), get_string('rawscsspre_desc', 'theme_customtheme'), '', PARAM_RAW);
@@ -63,6 +89,29 @@ if ($ADMIN->fulltree) {
     // Raw SCSS to include after the content.
     $setting = new admin_setting_scsscode('theme_customtheme/scss', get_string('rawscss', 'theme_customtheme'),
         get_string('rawscss_desc', 'theme_customtheme'), '', PARAM_RAW);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $settings->add($page);
+
+    // Advanced settings page.
+    $page = new admin_settingpage('theme_customtheme_advanced', get_string('advancedsettings', 'theme_customtheme'));
+
+    // Footer content.
+    $name = 'theme_customtheme/footercontent';
+    $title = get_string('footercontent', 'theme_customtheme');
+    $description = get_string('footercontent_desc', 'theme_customtheme');
+    $default = '';
+    $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Show footer login info.
+    $name = 'theme_customtheme/showfooterlogininfo';
+    $title = get_string('showfooterlogininfo', 'theme_customtheme');
+    $description = get_string('showfooterlogininfo_desc', 'theme_customtheme');
+    $default = 1;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 

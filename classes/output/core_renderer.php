@@ -18,7 +18,7 @@
  * Custom theme output renderers.
  *
  * @package    theme_customtheme
- * @copyright  2025 Your Name
+ * @copyright  2025 Your Name <your.email@example.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -26,27 +26,76 @@ namespace theme_customtheme\output;
 
 defined('MOODLE_INTERNAL') || die();
 
-use moodle_url;
-
 /**
  * Core renderer for custom theme.
  *
+ * Extends the boost core renderer to provide custom rendering for the theme.
+ *
  * @package    theme_customtheme
- * @copyright  2025 Your Name
+ * @copyright  2025 Your Name <your.email@example.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class core_renderer extends \theme_boost\output\core_renderer {
 
     /**
-     * Renders the custom footer.
+     * Override to add custom footer content.
      *
-     * @return string HTML to output.
+     * @return string HTML string for the footer.
      */
-    public function custom_footer() {
-        $output = '';
-        $output .= html_writer::start_div('custom-footer');
-        $output .= html_writer::tag('p', '© ' . date('Y') . ' Custom Theme for Moodle');
-        $output .= html_writer::end_div();
+    public function standard_footer_html() {
+        global $CFG;
+
+        $output = parent::standard_footer_html();
+
+        // Add custom footer content if set in theme settings.
+        if (!empty($this->page->theme->settings->footercontent)) {
+            $output .= \html_writer::start_div('custom-footer-content container');
+            $output .= format_text($this->page->theme->settings->footercontent, FORMAT_HTML);
+            $output .= \html_writer::end_div();
+        }
+
+        // Add login info if enabled.
+        if (!empty($this->page->theme->settings->showfooterlogininfo)) {
+            $output .= $this->footer_login_info();
+        }
+
         return $output;
+    }
+
+    /**
+     * Renders login information for the footer.
+     *
+     * @return string HTML for login information.
+     */
+    protected function footer_login_info() {
+        global $USER;
+
+        if (!isloggedin() || isguestuser()) {
+            return '';
+        }
+
+        $output = \html_writer::start_div('footer-login-info text-center mt-3');
+        $output .= \html_writer::tag('small',
+            get_string('loggedinasuser', 'core', fullname($USER)),
+            ['class' => 'text-muted']
+        );
+        $output .= \html_writer::end_div();
+
+        return $output;
+    }
+
+    /**
+     * Returns the custom logo URL if set, otherwise returns parent.
+     *
+     * @return string|null The logo URL or null.
+     */
+    public function get_logo_url() {
+        // Check if custom logo is set.
+        if (!empty($this->page->theme->settings->logo)) {
+            return $this->page->theme->setting_file_url('logo', 'logo');
+        }
+
+        // Fall back to parent method.
+        return parent::get_logo_url();
     }
 }

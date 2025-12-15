@@ -18,7 +18,7 @@
  * Privacy provider for theme_customtheme.
  *
  * @package    theme_customtheme
- * @copyright  2025 Your Name
+ * @copyright  2025 Your Name <your.email@example.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -29,7 +29,10 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Privacy provider for the custom theme.
  *
- * @copyright  2025 Your Name
+ * This theme does not store any personal data.
+ *
+ * @package    theme_customtheme
+ * @copyright  2025 Your Name <your.email@example.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class provider implements \core_privacy\local\metadata\null_provider {
@@ -38,9 +41,9 @@ class provider implements \core_privacy\local\metadata\null_provider {
      * Get the language string identifier with the component's language
      * file to explain why this plugin stores no data.
      *
-     * @return string
+     * @return string The language string identifier.
      */
-    public static function get_reason() : string {
+    public static function get_reason(): string {
         return 'privacy:metadata';
     }
 }
