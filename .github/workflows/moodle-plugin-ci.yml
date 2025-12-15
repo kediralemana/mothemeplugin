@@ -1,0 +1,44 @@
+name: Moodle Plugin CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  lint_validate:
+    name: Lint and Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: none
+          tools: composer
+          extensions: mysqli, intl, soap, zip, xml, mbstring, curl, gd
+
+      - name: Initialise moodle-plugin-ci
+        uses: moodlehq/moodle-plugin-ci@v5
+        with:
+          command: init
+        env:
+          MOODLE_BRANCH: MOODLE_401_STABLE
+
+      - name: Validate plugin structure
+        uses: moodlehq/moodle-plugin-ci@v5
+        with:
+          command: validate
+
+      - name: PHP lint
+        uses: moodlehq/moodle-plugin-ci@v5
+        with:
+          command: phplint
+
+      - name: Mustache lint
+        uses: moodlehq/moodle-plugin-ci@v5
+        with:
+          command: mustache
