@@ -44,8 +44,14 @@ function theme_customtheme_get_main_scss_content($theme) {
         $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/default.scss');
     } else if ($filename === 'plain.scss') {
         $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/plain.scss');
-    } else if ($filename && ($presetfile = $fs->get_file($context->id, 'theme_customtheme', 'preset', 0, '/', $filename))) {
-        $scss .= $presetfile->get_content();
+    } else if ($filename) {
+        $presetfile = $fs->get_file($context->id, 'theme_customtheme', 'preset', 0, '/', $filename);
+        if ($presetfile) {
+            $scss .= $presetfile->get_content();
+        } else {
+            // File not found, use default preset.
+            $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/default.scss');
+        }
     } else {
         // Use default preset.
         $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/default.scss');
@@ -100,7 +106,7 @@ function theme_customtheme_get_pre_scss($theme) {
  */
 function theme_customtheme_get_extra_scss($theme) {
     $content = '';
-    
+
     // Custom SCSS from settings.
     if (!empty($theme->settings->scss)) {
         $content .= $theme->settings->scss;
@@ -130,7 +136,8 @@ function theme_customtheme_pluginfile($course, $cm, $context, $filearea, $args, 
 
     if ($context->contextlevel == CONTEXT_SYSTEM) {
         // Serve files from the supported file areas.
-        if ($filearea === 'logo' || $filearea === 'backgroundimage' || $filearea === 'preset') {
+        $allowedareas = ['logo', 'backgroundimage', 'preset'];
+        if (in_array($filearea, $allowedareas)) {
             return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
         }
     }
