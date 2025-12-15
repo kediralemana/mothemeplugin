@@ -7,26 +7,40 @@ on:
 
 jobs:
   lint_validate:
-    name: Lint and Validate
+    name: Lint and Validate (${{ matrix.moodle }} • PHP ${{ matrix.php }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - php: '8.1'
+            moodle: MOODLE_401_STABLE
+          - php: '8.2'
+            moodle: MOODLE_402_STABLE
+          - php: '8.2'
+            moodle: MOODLE_403_STABLE
+          - php: '8.2'
+            moodle: MOODLE_404_STABLE
+          - php: '8.3'
+            moodle: MOODLE_405_STABLE
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up PHP
+      - name: Set up PHP ${{ matrix.php }}
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: ${{ matrix.php }}
           coverage: none
           tools: composer
           extensions: mysqli, intl, soap, zip, xml, mbstring, curl, gd
 
-      - name: Initialise moodle-plugin-ci
+      - name: Initialise moodle-plugin-ci (${{ matrix.moodle }})
         uses: moodlehq/moodle-plugin-ci@v5
         with:
           command: init
         env:
-          MOODLE_BRANCH: MOODLE_401_STABLE
+          MOODLE_BRANCH: ${{ matrix.moodle }}
 
       - name: Validate plugin structure
         uses: moodlehq/moodle-plugin-ci@v5
@@ -42,3 +56,8 @@ jobs:
         uses: moodlehq/moodle-plugin-ci@v5
         with:
           command: mustache
+
+      - name: Code checker (PHPCS)
+        uses: moodlehq/moodle-plugin-ci@v5
+        with:
+          command: codechecker
