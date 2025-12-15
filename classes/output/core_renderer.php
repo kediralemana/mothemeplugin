@@ -47,6 +47,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         $output = parent::standard_footer_html();
 
+        // Add social media links.
+        $output .= $this->social_media_links();
+
         // Add custom footer content if set in theme settings.
         if (!empty($this->page->theme->settings->footercontent)) {
             $output .= \html_writer::start_div('custom-footer-content container');
@@ -57,6 +60,60 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // Add login info if enabled.
         if (!empty($this->page->theme->settings->showfooterlogininfo)) {
             $output .= $this->footer_login_info();
+        }
+
+        return $output;
+    }
+
+    /**
+     * Renders social media links.
+     *
+     * @return string HTML for social media links.
+     */
+    protected function social_media_links() {
+        $output = '';
+        $hassocial = false;
+
+        $socialmedia = [
+            'facebook' => ['icon' => 'fa-facebook', 'name' => 'Facebook'],
+            'twitter' => ['icon' => 'fa-twitter', 'name' => 'Twitter'],
+            'linkedin' => ['icon' => 'fa-linkedin', 'name' => 'LinkedIn'],
+            'instagram' => ['icon' => 'fa-instagram', 'name' => 'Instagram'],
+            'youtube' => ['icon' => 'fa-youtube', 'name' => 'YouTube'],
+        ];
+
+        // Check if any social media is set.
+        foreach ($socialmedia as $key => $data) {
+            if (!empty($this->page->theme->settings->$key)) {
+                $hassocial = true;
+                break;
+            }
+        }
+
+        if ($hassocial) {
+            $output .= \html_writer::start_div('social-media-links text-center py-3');
+            $output .= \html_writer::start_tag('ul', ['class' => 'list-inline mb-0']);
+
+            foreach ($socialmedia as $key => $data) {
+                if (!empty($this->page->theme->settings->$key)) {
+                    $url = $this->page->theme->settings->$key;
+                    $output .= \html_writer::start_tag('li', ['class' => 'list-inline-item mx-2']);
+                    $output .= \html_writer::link(
+                        $url,
+                        \html_writer::tag('i', '', ['class' => 'fa ' . $data['icon'] . ' fa-2x']),
+                        [
+                            'target' => '_blank',
+                            'rel' => 'noopener noreferrer',
+                            'title' => $data['name'],
+                            'class' => 'social-link',
+                        ]
+                    );
+                    $output .= \html_writer::end_tag('li');
+                }
+            }
+
+            $output .= \html_writer::end_tag('ul');
+            $output .= \html_writer::end_div();
         }
 
         return $output;

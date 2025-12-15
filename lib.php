@@ -74,12 +74,17 @@ function theme_customtheme_get_main_scss_content($theme) {
  */
 function theme_customtheme_get_pre_scss($theme) {
     $scss = '';
+
+    // Color configuration.
     $configurable = [
-        // Config key => [variableName, ...].
         'brandcolor' => ['primary'],
+        'secondarycolor' => ['secondary'],
+        'linkcolor' => ['link-color'],
+        'navbarcolor' => ['navbar-bg'],
+        'footercolor' => ['footer-bg'],
     ];
 
-    // Prepend variables first.
+    // Prepend color variables.
     foreach ($configurable as $configkey => $targets) {
         $value = isset($theme->settings->{$configkey}) ? $theme->settings->{$configkey} : null;
         if (empty($value)) {
@@ -88,6 +93,24 @@ function theme_customtheme_get_pre_scss($theme) {
         array_map(function($target) use (&$scss, $value) {
             $scss .= '$' . $target . ': ' . $value . ";\n";
         }, (array) $targets);
+    }
+
+    // Google Fonts.
+    $fontname = isset($theme->settings->fontname) ? $theme->settings->fontname : 'Roboto';
+    $fontnameheading = isset($theme->settings->fontnameheading) ? $theme->settings->fontnameheading : 'Roboto';
+    $fontsize = isset($theme->settings->fontsize) ? $theme->settings->fontsize : '95%';
+
+    if (!empty($fontname) || !empty($fontnameheading)) {
+        $scss .= "// Google Fonts\n";
+        if (!empty($fontname)) {
+            $scss .= '$font-family-sans-serif: "' . $fontname . '", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;' . "\n";
+        }
+        if (!empty($fontnameheading)) {
+            $scss .= '$headings-font-family: "' . $fontnameheading . '", $font-family-sans-serif !default;' . "\n";
+        }
+        if (!empty($fontsize)) {
+            $scss .= '$font-size-base: ' . $fontsize . ' !default;' . "\n";
+        }
     }
 
     // Prepend pre-scss.
@@ -112,7 +135,40 @@ function theme_customtheme_get_extra_scss($theme) {
         $content .= $theme->settings->scss;
     }
 
+    // Custom CSS from settings.
+    if (!empty($theme->settings->customcss)) {
+        $content .= $theme->settings->customcss;
+    }
+
     return $content;
+}
+
+/**
+ * Inject Google Fonts into the page head.
+ *
+ * @return string HTML to inject Google Fonts.
+ */
+function theme_customtheme_before_standard_html_head() {
+    global $PAGE;
+
+    $theme = $PAGE->theme;
+    $fontname = isset($theme->settings->fontname) ? $theme->settings->fontname : '';
+    $fontnameheading = isset($theme->settings->fontnameheading) ? $theme->settings->fontnameheading : '';
+
+    $fonts = [];
+    if (!empty($fontname)) {
+        $fonts[] = str_replace(' ', '+', $fontname) . ':300,400,500,700';
+    }
+    if (!empty($fontnameheading) && $fontnameheading !== $fontname) {
+        $fonts[] = str_replace(' ', '+', $fontnameheading) . ':300,400,500,700';
+    }
+
+    if (!empty($fonts)) {
+        $fontsstr = implode('|', array_unique($fonts));
+        return '<link href="https://fonts.googleapis.com/css?family=' . $fontsstr . '&display=swap" rel="stylesheet">';
+    }
+
+    return '';
 }
 
 /**
@@ -136,7 +192,14 @@ function theme_customtheme_pluginfile($course, $cm, $context, $filearea, $args, 
 
     if ($context->contextlevel == CONTEXT_SYSTEM) {
         // Serve files from the supported file areas.
-        $allowedareas = ['logo', 'backgroundimage', 'preset'];
+        $allowedareas = [
+            'logo',
+            'logocompact',
+            'favicon',
+            'backgroundimage',
+            'loginbackgroundimage',
+            'preset',
+        ];
         if (in_array($filearea, $allowedareas)) {
             return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
         }
