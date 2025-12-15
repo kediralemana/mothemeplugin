@@ -413,6 +413,302 @@ if ($ADMIN->fulltree) {
     $settings->add($page);
 
     // ==========================
+    // HEADER & NAVIGATION TAB
+    // ==========================
+    $page = new admin_settingpage(
+        'theme_customtheme_header',
+        get_string('header', 'theme_customtheme')
+    );
+
+    // Header style.
+    $name = 'theme_customtheme/headerstyle';
+    $title = get_string('headerstyle', 'theme_customtheme');
+    $description = get_string('headerstyle_desc', 'theme_customtheme');
+    $default = 'style1';
+    $choices = [
+        'style1' => get_string('headerstyle1', 'theme_customtheme'),
+        'style2' => get_string('headerstyle2', 'theme_customtheme'),
+        'style3' => get_string('headerstyle3', 'theme_customtheme'),
+    ];
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Sticky header.
+    $name = 'theme_customtheme/stickyheader';
+    $title = get_string('stickyheader', 'theme_customtheme');
+    $description = get_string('stickyheader_desc', 'theme_customtheme');
+    $default = 1;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Custom menu items heading.
+    $name = 'theme_customtheme/custommenu';
+    $title = get_string('custommenu', 'theme_customtheme');
+    $description = get_string('custommenu_desc', 'theme_customtheme');
+    $setting = new admin_setting_heading($name, $title, $description);
+    $page->add($setting);
+
+    // Quick link 1.
+    $name = 'theme_customtheme/quicklink1text';
+    $title = get_string('quicklink1text', 'theme_customtheme');
+    $description = get_string('quicklink1text_desc', 'theme_customtheme');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_customtheme/quicklink1url';
+    $title = get_string('quicklink1url', 'theme_customtheme');
+    $description = get_string('quicklink1url_desc', 'theme_customtheme');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Quick link 2.
+    $name = 'theme_customtheme/quicklink2text';
+    $title = get_string('quicklink2text', 'theme_customtheme');
+    $description = get_string('quicklink2text_desc', 'theme_customtheme');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_customtheme/quicklink2url';
+    $title = get_string('quicklink2url', 'theme_customtheme');
+    $description = get_string('quicklink2url_desc', 'theme_customtheme');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Quick link 3.
+    $name = 'theme_customtheme/quicklink3text';
+    $title = get_string('quicklink3text', 'theme_customtheme');
+    $description = get_string('quicklink3text_desc', 'theme_customtheme');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_customtheme/quicklink3url';
+    $title = get_string('quicklink3url', 'theme_customtheme');
+    $description = get_string('quicklink3url_desc', 'theme_customtheme');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $settings->add($page);
+
+    // ==========================
+    // ANNOUNCEMENT BANNER TAB
+    // ==========================
+    $page = new admin_settingpage(
+        'theme_customtheme_announcement',
+        get_string('announcement', 'theme_customtheme')
+    );
+
+    // Enable announcement.
+    $name = 'theme_customtheme/enableannouncement';
+    $title = get_string('enableannouncement', 'theme_customtheme');
+    $description = get_string('enableannouncement_desc', 'theme_customtheme');
+    $default = 0;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Announcement text.
+    $name = 'theme_customtheme/announcementtext';
+    $title = get_string('announcementtext', 'theme_customtheme');
+    $description = get_string('announcementtext_desc', 'theme_customtheme');
+    $default = '';
+    $setting = new admin_setting_configtextarea($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Announcement type.
+    $name = 'theme_customtheme/announcementtype';
+    $title = get_string('announcementtype', 'theme_customtheme');
+    $description = get_string('announcementtype_desc', 'theme_customtheme');
+    $default = 'info';
+    $choices = [
+        'info' => get_string('info', 'theme_customtheme'),
+        'success' => get_string('success', 'theme_customtheme'),
+        'warning' => get_string('warning', 'theme_customtheme'),
+        'danger' => get_string('danger', 'theme_customtheme'),
+    ];
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Announcement dismissible.
+    $name = 'theme_customtheme/announcementdismissible';
+    $title = get_string('announcementdismissible', 'theme_customtheme');
+    $description = get_string('announcementdismissible_desc', 'theme_customtheme');
+    $default = 1;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $settings->add($page);
+
+    // ==========================
+    // FOOTER CUSTOMIZATION TAB
+    // ==========================
+    $page = new admin_settingpage(
+        'theme_customtheme_footercustom',
+        get_string('footercustomization', 'theme_customtheme')
+    );
+
+    // Footer layout.
+    $name = 'theme_customtheme/footerlayout';
+    $title = get_string('footerlayout', 'theme_customtheme');
+    $description = get_string('footerlayout_desc', 'theme_customtheme');
+    $default = '3columns';
+    $choices = [
+        '1column' => get_string('1column', 'theme_customtheme'),
+        '2columns' => get_string('2columns', 'theme_customtheme'),
+        '3columns' => get_string('3columns', 'theme_customtheme'),
+        '4columns' => get_string('4columns', 'theme_customtheme'),
+    ];
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Footer column 1.
+    $name = 'theme_customtheme/footercol1heading';
+    $title = get_string('footercol1heading', 'theme_customtheme');
+    $description = get_string('footercol1heading_desc', 'theme_customtheme');
+    $default = 'About Us';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_customtheme/footercol1content';
+    $title = get_string('footercol1content', 'theme_customtheme');
+    $description = get_string('footercol1content_desc', 'theme_customtheme');
+    $default = '';
+    $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Footer column 2.
+    $name = 'theme_customtheme/footercol2heading';
+    $title = get_string('footercol2heading', 'theme_customtheme');
+    $description = get_string('footercol2heading_desc', 'theme_customtheme');
+    $default = 'Quick Links';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_customtheme/footercol2content';
+    $title = get_string('footercol2content', 'theme_customtheme');
+    $description = get_string('footercol2content_desc', 'theme_customtheme');
+    $default = '';
+    $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Footer column 3.
+    $name = 'theme_customtheme/footercol3heading';
+    $title = get_string('footercol3heading', 'theme_customtheme');
+    $description = get_string('footercol3heading_desc', 'theme_customtheme');
+    $default = 'Contact';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_customtheme/footercol3content';
+    $title = get_string('footercol3content', 'theme_customtheme');
+    $description = get_string('footercol3content_desc', 'theme_customtheme');
+    $default = '';
+    $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Footer column 4.
+    $name = 'theme_customtheme/footercol4heading';
+    $title = get_string('footercol4heading', 'theme_customtheme');
+    $description = get_string('footercol4heading_desc', 'theme_customtheme');
+    $default = 'Follow Us';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_customtheme/footercol4content';
+    $title = get_string('footercol4content', 'theme_customtheme');
+    $description = get_string('footercol4content_desc', 'theme_customtheme');
+    $default = '';
+    $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Copyright text.
+    $name = 'theme_customtheme/copyrighttext';
+    $title = get_string('copyrighttext', 'theme_customtheme');
+    $description = get_string('copyrighttext_desc', 'theme_customtheme');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $settings->add($page);
+
+    // ==========================
+    // COURSE DISPLAY TAB
+    // ==========================
+    $page = new admin_settingpage(
+        'theme_customtheme_coursedisplay',
+        get_string('coursedisplay', 'theme_customtheme')
+    );
+
+    // Course card style.
+    $name = 'theme_customtheme/coursecardstyle';
+    $title = get_string('coursecardstyle', 'theme_customtheme');
+    $description = get_string('coursecardstyle_desc', 'theme_customtheme');
+    $default = 'default';
+    $choices = [
+        'default' => get_string('carddefault', 'theme_customtheme'),
+        'modern' => get_string('cardmodern', 'theme_customtheme'),
+        'minimal' => get_string('cardminimal', 'theme_customtheme'),
+    ];
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Show course summary.
+    $name = 'theme_customtheme/showcoursesummary';
+    $title = get_string('showcoursesummary', 'theme_customtheme');
+    $description = get_string('showcoursesummary_desc', 'theme_customtheme');
+    $default = 1;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Show teacher info.
+    $name = 'theme_customtheme/showteacherinfo';
+    $title = get_string('showteacherinfo', 'theme_customtheme');
+    $description = get_string('showteacherinfo_desc', 'theme_customtheme');
+    $default = 1;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Show course progress.
+    $name = 'theme_customtheme/showcourseprogress';
+    $title = get_string('showcourseprogress', 'theme_customtheme');
+    $description = get_string('showcourseprogress_desc', 'theme_customtheme');
+    $default = 1;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $settings->add($page);
+
+    // ==========================
     // ADVANCED TAB
     // ==========================
     $page = new admin_settingpage(

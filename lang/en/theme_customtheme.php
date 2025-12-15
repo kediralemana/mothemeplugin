@@ -39,6 +39,10 @@ $string['typography'] = 'Typography';
 $string['frontpage'] = 'Frontpage';
 $string['social'] = 'Social media';
 $string['presets'] = 'Presets';
+$string['headernavigation'] = 'Header & Navigation';
+$string['announcement'] = 'Announcement';
+$string['footercustomization'] = 'Footer Customization';
+$string['coursedisplay'] = 'Course Display';
 $string['advancedsettings'] = 'Advanced settings';
 
 // General settings.
@@ -118,6 +122,82 @@ $string['rawscss'] = 'Raw SCSS';
 $string['rawscss_desc'] = 'Use this field to provide SCSS or CSS code which will be injected at the end of the style sheet.';
 $string['rawscsspre'] = 'Raw initial SCSS';
 $string['rawscsspre_desc'] = 'In this field you can provide initialising SCSS code, it will be injected before everything else. Most of the time you will use this setting to define variables.';
+
+// Header & Navigation.
+$string['headerstyle'] = 'Header style';
+$string['headerstyle_desc'] = 'Select the header style for your site.';
+$string['headerstyle1'] = 'Style 1 - Default';
+$string['headerstyle2'] = 'Style 2 - Centered';
+$string['headerstyle3'] = 'Style 3 - Minimal';
+$string['stickyheader'] = 'Sticky header';
+$string['stickyheader_desc'] = 'Enable sticky header that remains visible when scrolling down the page.';
+$string['quicklinksheading'] = 'Quick Links';
+$string['quicklinksheading_desc'] = 'Add custom quick links to the header navigation for easy access to important pages.';
+$string['quicklink1text'] = 'Quick link 1 text';
+$string['quicklink1text_desc'] = 'Text to display for the first quick link.';
+$string['quicklink1url'] = 'Quick link 1 URL';
+$string['quicklink1url_desc'] = 'URL for the first quick link.';
+$string['quicklink2text'] = 'Quick link 2 text';
+$string['quicklink2text_desc'] = 'Text to display for the second quick link.';
+$string['quicklink2url'] = 'Quick link 2 URL';
+$string['quicklink2url_desc'] = 'URL for the second quick link.';
+$string['quicklink3text'] = 'Quick link 3 text';
+$string['quicklink3text_desc'] = 'Text to display for the third quick link.';
+$string['quicklink3url'] = 'Quick link 3 URL';
+$string['quicklink3url_desc'] = 'URL for the third quick link.';
+
+// Announcement Banner.
+$string['enableannouncement'] = 'Enable announcement banner';
+$string['enableannouncement_desc'] = 'Display a site-wide announcement banner at the top of all pages.';
+$string['announcementtext'] = 'Announcement text';
+$string['announcementtext_desc'] = 'The message to display in the announcement banner. Supports HTML formatting.';
+$string['announcementtype'] = 'Announcement type';
+$string['announcementtype_desc'] = 'Choose the visual style of the announcement banner.';
+$string['info'] = 'Info (Blue)';
+$string['success'] = 'Success (Green)';
+$string['warning'] = 'Warning (Yellow)';
+$string['danger'] = 'Danger (Red)';
+$string['dismissible'] = 'Dismissible announcement';
+$string['dismissible_desc'] = 'Allow users to dismiss/close the announcement banner.';
+
+// Footer Customization.
+$string['footerlayout'] = 'Footer layout';
+$string['footerlayout_desc'] = 'Choose the number of columns for the footer layout.';
+$string['footerlayout1'] = '1 Column';
+$string['footerlayout2'] = '2 Columns';
+$string['footerlayout3'] = '3 Columns';
+$string['footerlayout4'] = '4 Columns';
+$string['footercol1heading'] = 'Footer column 1 heading';
+$string['footercol1heading_desc'] = 'Heading for the first footer column.';
+$string['footercol1content'] = 'Footer column 1 content';
+$string['footercol1content_desc'] = 'Content for the first footer column. HTML is supported.';
+$string['footercol2heading'] = 'Footer column 2 heading';
+$string['footercol2heading_desc'] = 'Heading for the second footer column.';
+$string['footercol2content'] = 'Footer column 2 content';
+$string['footercol2content_desc'] = 'Content for the second footer column. HTML is supported.';
+$string['footercol3heading'] = 'Footer column 3 heading';
+$string['footercol3heading_desc'] = 'Heading for the third footer column.';
+$string['footercol3content'] = 'Footer column 3 content';
+$string['footercol3content_desc'] = 'Content for the third footer column. HTML is supported.';
+$string['footercol4heading'] = 'Footer column 4 heading';
+$string['footercol4heading_desc'] = 'Heading for the fourth footer column.';
+$string['footercol4content'] = 'Footer column 4 content';
+$string['footercol4content_desc'] = 'Content for the fourth footer column. HTML is supported.';
+$string['copyrighttext'] = 'Copyright text';
+$string['copyrighttext_desc'] = 'Custom copyright text to display in the footer.';
+
+// Course Display.
+$string['coursecardstyle'] = 'Course card style';
+$string['coursecardstyle_desc'] = 'Choose the visual style for course cards in course listings.';
+$string['carddefault'] = 'Default';
+$string['cardmodern'] = 'Modern (with shadow and hover effects)';
+$string['cardminimal'] = 'Minimal (clean and simple)';
+$string['showcoursesummary'] = 'Show course summary';
+$string['showcoursesummary_desc'] = 'Display course summary/description on course cards.';
+$string['showteacherinfo'] = 'Show teacher information';
+$string['showteacherinfo_desc'] = 'Display teacher names and profile pictures on course cards.';
+$string['showcourseprogress'] = 'Show course progress';
+$string['showcourseprogress_desc'] = 'Display course completion progress bar for enrolled students.';
 
 // Advanced settings.
 $string['footercontent'] = 'Footer content';
