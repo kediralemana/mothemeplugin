@@ -18,17 +18,17 @@
  * Theme version file.
  *
  * @package    theme_customtheme
- * @copyright  2025 Your Name <your.email@example.com>
+ * @copyright  2025 Custom Theme contributors
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2025121500;           // YYYYMMDDXX format.
-$plugin->requires  = 2022112800;           // Requires Moodle 4.1 or later.
+$plugin->version   = 2025121900;           // YYYYMMDDXX format.
+$plugin->requires  = 2024042200;           // Requires Moodle 4.4 or later.
 $plugin->component = 'theme_customtheme';  // Full frankenstyle component name.
-$plugin->release   = 'v1.0.0';             // Human-readable version name.
+$plugin->release   = 'v1.0.1';             // Human-readable version name.
 $plugin->maturity  = MATURITY_STABLE;      // MATURITY_ALPHA, MATURITY_BETA, MATURITY_RC or MATURITY_STABLE.
 $plugin->dependencies = [
-    'theme_boost' => 2022112800,           // Requires Boost theme.
+    'theme_boost' => 2024042200,           // Requires Boost theme (4.4).
 ];

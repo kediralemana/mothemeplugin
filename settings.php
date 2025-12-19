@@ -18,7 +18,7 @@
  * Theme settings.
  *
  * @package    theme_customtheme
- * @copyright  2025 Your Name
+ * @copyright  2025 Custom Theme contributors
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -35,6 +35,15 @@ if ($ADMIN->fulltree) {
     $title = get_string('logo', 'theme_customtheme');
     $description = get_string('logo_desc', 'theme_customtheme');
     $setting = new admin_setting_configstoredfile($name, $title, $description, 'logo');
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Favicon setting.
+    $name = 'theme_customtheme/favicon';
+    $title = get_string('favicon', 'theme_customtheme');
+    $description = get_string('favicon_desc', 'theme_customtheme');
+    $setting = new admin_setting_configstoredfile($name, $title, $description, 'favicon', 0,
+        ['accepted_types' => ['.ico', '.png', '.jpg', '.jpeg', '.svg']]);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 

@@ -3,8 +3,8 @@
 ## Quick Start
 
 1. **Upload the theme**
-   - Place the entire `customtheme` folder in `moodle/theme/`
-   - The final path should be: `moodle/theme/customtheme/`
+   - Install the theme into `moodle/theme/` so the final path is: `moodle/theme/customtheme/`
+   - The `customtheme` folder must contain `config.php`, `version.php`, and the other plugin files
 
 2. **Install via Moodle**
    - Log in as administrator
@@ -22,10 +22,11 @@
 ### Setting Brand Colors
 
 1. Go to: Site administration → Appearance → Themes → Custom Theme
-2. Find "Brand colour" setting
-3. Enter your hex color code (e.g., #0f6cbf)
-4. Save changes
-5. Purge all caches: Site administration → Development → Purge all caches
+2. Set **Logo** and **Favicon** as needed
+3. Find **Brand colour** setting
+4. Enter your hex color code (e.g., #0f6cbf)
+5. Save changes
+6. Purge all caches: Site administration → Development → Purge all caches
 
 ### Adding Custom SCSS
 
@@ -90,8 +91,8 @@ The theme supports standard Boost presets:
 
 ## System Requirements
 
-- Moodle 4.1 or higher
-- PHP 7.4 or higher
+- Moodle 4.4 to 5.1
+- PHP 8.1 or higher
 - Modern web browser with CSS3 support
 - Write permissions on moodledata directory
 

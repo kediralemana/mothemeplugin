@@ -18,7 +18,7 @@
  * Theme config file.
  *
  * @package    theme_customtheme
- * @copyright  2025 Your Name
+ * @copyright  2025 Custom Theme contributors
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -30,10 +30,13 @@ $THEME->name = 'customtheme';
 $THEME->parents = ['boost'];
 
 // This theme uses SCSS for styling.
-$THEME->sheets = [];
+$THEME->sheets = ['moodle'];
 
 // Do not add any extra stylesheets for the editor.
 $THEME->editor_sheets = [];
+
+// Enable course index drawer introduced in Moodle 4.1+.
+$THEME->usescourseindex = true;
 
 // Use the renderer factory that allows overriding renderers.
 $THEME->rendererfactory = 'theme_overridden_renderer_factory';
@@ -42,7 +45,7 @@ $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 $THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
 
 // The SCSS function to use for processing.
-$THEME->scss = function($theme) {
+$THEME->scss = function ($theme) {
     return theme_customtheme_get_main_scss_content($theme);
 };
 

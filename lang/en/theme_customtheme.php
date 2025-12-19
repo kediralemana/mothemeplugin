@@ -18,7 +18,7 @@
  * Language strings for theme_customtheme.
  *
  * @package    theme_customtheme
- * @copyright  2025 Your Name <your.email@example.com>
+ * @copyright  2025 Custom Theme contributors
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -39,6 +39,8 @@ $string['advancedsettings'] = 'Advanced settings';
 // General settings.
 $string['logo'] = 'Logo';
 $string['logo_desc'] = 'Upload a custom logo for your site. This will be displayed in the header.';
+$string['favicon'] = 'Favicon';
+$string['favicon_desc'] = 'Upload a favicon for your site (.ico, .png, .jpg, .svg).';
 $string['backgroundimage'] = 'Background image';
 $string['backgroundimage_desc'] = 'The background image for the site. This will be displayed behind the content.';
 $string['brandcolor'] = 'Brand colour';

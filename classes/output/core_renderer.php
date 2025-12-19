@@ -18,7 +18,7 @@
  * Custom theme output renderers.
  *
  * @package    theme_customtheme
- * @copyright  2025 Your Name <your.email@example.com>
+ * @copyright  2025 Custom Theme contributors
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,7 +32,7 @@ defined('MOODLE_INTERNAL') || die();
  * Extends the boost core renderer to provide custom rendering for the theme.
  *
  * @package    theme_customtheme
- * @copyright  2025 Your Name <your.email@example.com>
+ * @copyright  2025 Custom Theme contributors
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class core_renderer extends \theme_boost\output\core_renderer {
@@ -43,8 +43,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string HTML string for the footer.
      */
     public function standard_footer_html() {
-        global $CFG;
-
         $output = parent::standard_footer_html();
 
         // Add custom footer content if set in theme settings.
@@ -76,7 +74,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         $output = \html_writer::start_div('footer-login-info text-center mt-3');
         $output .= \html_writer::tag('small',
-            get_string('loggedinasuser', 'core', fullname($USER)),
+            get_string('loggedinas', 'core', fullname($USER)),
             ['class' => 'text-muted']
         );
         $output .= \html_writer::end_div();
@@ -97,5 +95,21 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // Fall back to parent method.
         return parent::get_logo_url();
+    }
+
+    /**
+     * Returns the favicon link element.
+     *
+     * @return string The favicon URL.
+     */
+    public function favicon() {
+        if (!empty($this->page->theme->settings->favicon)) {
+            $url = $this->page->theme->setting_file_url('favicon', 'favicon');
+            if (!empty($url)) {
+                return $url;
+            }
+        }
+
+        return parent::favicon();
     }
 }

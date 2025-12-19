@@ -18,7 +18,7 @@
  * Privacy provider for theme_customtheme.
  *
  * @package    theme_customtheme
- * @copyright  2025 Your Name <your.email@example.com>
+ * @copyright  2025 Custom Theme contributors
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,7 +32,7 @@ defined('MOODLE_INTERNAL') || die();
  * This theme does not store any personal data.
  *
  * @package    theme_customtheme
- * @copyright  2025 Your Name <your.email@example.com>
+ * @copyright  2025 Custom Theme contributors
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class provider implements \core_privacy\local\metadata\null_provider {

@@ -10,6 +10,7 @@ Custom Theme is a clean and flexible theme for Moodle that extends the Boost the
 
 - Based on Moodle's Boost theme
 - Customizable brand colors
+- Favicon upload and custom logo
 - SCSS support for advanced customization
 - Responsive design
 - Modern card-based layouts
@@ -17,10 +18,11 @@ Custom Theme is a clean and flexible theme for Moodle that extends the Boost the
 
 ## Installation
 
-1. Copy the `customtheme` folder to your Moodle installation's `theme` directory:
+1. Install the theme into your Moodle `theme` directory so the final path is:
    ```
    moodle/theme/customtheme/
    ```
+   The `customtheme` folder must contain `config.php`, `version.php`, and the other plugin files.
 
 2. Log in to your Moodle site as an administrator
 
@@ -40,13 +42,14 @@ After installation, you can configure the theme:
 
 2. Configure the following settings:
    - **Brand colour**: Set your primary brand color
+   - **Favicon**: Upload a favicon (ico/png/jpg/svg)
    - **Theme preset**: Choose a preset style
    - **Raw initial SCSS**: Add SCSS variables
    - **Raw SCSS**: Add custom SCSS/CSS code
 
 ## Requirements
 
-- Moodle 4.1 or later
+- Moodle 4.4–5.1
 - Boost theme (included with Moodle)
 
 ## File Structure
@@ -60,8 +63,16 @@ customtheme/
 ├── lang/
 │   └── en/
 │       └── theme_customtheme.php  # Language strings
+├── templates/
+│   ├── columns2.mustache          # Columns layout template
+│   ├── embedded.mustache          # Embedded layout template
+│   ├── maintenance.mustache       # Maintenance layout template
+│   └── secure.mustache            # Secure layout template
 ├── layout/
-│   └── columns2.php        # Layout template
+│   ├── columns2.php        # Standard layout
+│   ├── embedded.php        # Embedded layout
+│   ├── maintenance.php     # Maintenance layout
+│   └── secure.php          # Secure/safe browser layout
 ├── scss/
 │   └── customtheme.scss    # Custom SCSS styles
 └── style/
@@ -103,9 +114,17 @@ This program is free software: you can redistribute it and/or modify it under th
 ## Credits
 
 - Based on the Boost theme by Moodle HQ
-- Copyright 2025 Your Name
+- Maintained by Custom Theme contributors
 
 ## Changelog
+
+### Version 2025121900 (v1.0.1)
+- Convert layouts to Moodle PHP layout wrappers plus Mustache templates for 4.4–5.1 compatibility
+- Brand colour now also drives custom SCSS accents
+- Background image setting now applies automatically to the body
+- Added favicon upload setting and favicon rendering override
+- Enabled course index drawer support (Moodle 4.4+)
+- Exposed brand colour as CSS custom properties for downstream styling
 
 ### Version 2025121500
 - Initial release

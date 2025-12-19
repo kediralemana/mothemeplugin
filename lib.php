@@ -18,7 +18,7 @@
  * Theme lib file.
  *
  * @package    theme_customtheme
- * @copyright  2025 Your Name
+ * @copyright  2025 Custom Theme contributors
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -42,9 +42,9 @@ function theme_customtheme_get_main_scss_content($theme) {
     // Load the preset from boost.
     if ($filename === 'default.scss') {
         $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/default.scss');
-    } else if ($filename === 'plain.scss') {
+    } elseif ($filename === 'plain.scss') {
         $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/plain.scss');
-    } else if ($filename && ($presetfile = $fs->get_file($context->id, 'theme_customtheme', 'preset', 0, '/', $filename))) {
+    } elseif ($filename && ($presetfile = $fs->get_file($context->id, 'theme_customtheme', 'preset', 0, '/', $filename))) {
         $scss .= $presetfile->get_content();
     } else {
         // Use default preset.
@@ -70,7 +70,7 @@ function theme_customtheme_get_pre_scss($theme) {
     $scss = '';
     $configurable = [
         // Config key => [variableName, ...].
-        'brandcolor' => ['primary'],
+        'brandcolor' => ['primary', 'custom-primary-color'],
     ];
 
     // Prepend variables first.
@@ -79,9 +79,15 @@ function theme_customtheme_get_pre_scss($theme) {
         if (empty($value)) {
             continue;
         }
-        array_map(function($target) use (&$scss, $value) {
+        foreach ((array) $targets as $target) {
             $scss .= '$' . $target . ': ' . $value . ";\n";
-        }, (array) $targets);
+        }
+
+        // Also expose as CSS custom properties for easier downstream use.
+        $scss .= ":root {\n";
+        $scss .= "    --customtheme-brand: {$value};\n";
+        $scss .= "    --customtheme-brand-rgb: #{red({$value})}, #{green({$value})}, #{blue({$value})};\n";
+        $scss .= "}\n";
     }
 
     // Prepend pre-scss.
@@ -100,10 +106,23 @@ function theme_customtheme_get_pre_scss($theme) {
  */
 function theme_customtheme_get_extra_scss($theme) {
     $content = '';
-    
+
     // Custom SCSS from settings.
     if (!empty($theme->settings->scss)) {
         $content .= $theme->settings->scss;
+    }
+
+    // Background image support.
+    if (!empty($theme->settings->backgroundimage)) {
+        $url = $theme->setting_file_url('backgroundimage', 'backgroundimage');
+        if (!empty($url)) {
+            $content .= "\nbody.has-background-image {\n";
+            $content .= "    background-image: url('{$url}');\n";
+            $content .= "    background-size: cover;\n";
+            $content .= "    background-position: center;\n";
+            $content .= "    background-repeat: no-repeat;\n";
+            $content .= "}\n";
+        }
     }
 
     return $content;
@@ -130,7 +149,7 @@ function theme_customtheme_pluginfile($course, $cm, $context, $filearea, $args, 
 
     if ($context->contextlevel == CONTEXT_SYSTEM) {
         // Serve files from the supported file areas.
-        if ($filearea === 'logo' || $filearea === 'backgroundimage' || $filearea === 'preset') {
+        if (in_array($filearea, ['logo', 'backgroundimage', 'preset', 'favicon'], true)) {
             return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
         }
     }
