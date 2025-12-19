@@ -7,23 +7,39 @@ on:
 
 jobs:
   lint_validate:
-    name: Lint and Validate (${{ matrix.moodle }} • PHP ${{ matrix.php }})
-    runs-on: ubuntu-latest
+    name: Lint and Validate (${{ matrix.moodle_branch }} • PHP ${{ matrix.php }})
+    runs-on: ubuntu-22.04
+
+    services:
+      mariadb:
+        image: mariadb:10
+        env:
+          MYSQL_USER: 'root'
+          MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+          MYSQL_CHARACTER_SET_SERVER: "utf8mb4"
+          MYSQL_COLLATION_SERVER: "utf8mb4_unicode_ci"
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 3
+
     strategy:
       fail-fast: false
       matrix:
         include:
           - php: '8.1'
-            moodle: MOODLE_404_STABLE
+            moodle_branch: MOODLE_404_STABLE
           - php: '8.2'
-            moodle: MOODLE_405_STABLE
+            moodle_branch: MOODLE_405_STABLE
           - php: '8.2'
-            moodle: MOODLE_501_STABLE
+            moodle_branch: MOODLE_501_STABLE
           - php: '8.3'
-            moodle: MOODLE_501_STABLE
+            moodle_branch: MOODLE_501_STABLE
+
     steps:
-      - name: Checkout repository
+      - name: Check out repository code
         uses: actions/checkout@v4
+        with:
+          path: plugin
 
       - name: Set up PHP ${{ matrix.php }}
         uses: shivammathur/setup-php@v2
@@ -32,30 +48,32 @@ jobs:
           coverage: none
           tools: composer
           extensions: mysqli, intl, soap, zip, xml, mbstring, curl, gd
+          ini-values: max_input_vars=5000
 
-      - name: Initialise moodle-plugin-ci (${{ matrix.moodle }})
-        uses: moodlehq/moodle-plugin-ci@v5
-        with:
-          command: init
+      - name: Initialise moodle-plugin-ci
+        run: |
+          composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^4
+          echo "$(cd ci/bin; pwd)" >> "$GITHUB_PATH"
+          echo "$(cd ci/vendor/bin; pwd)" >> "$GITHUB_PATH"
+
+      - name: Install moodle-plugin-ci
+        run: moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1
         env:
-          MOODLE_BRANCH: ${{ matrix.moodle }}
+          DB: mariadb
+          MOODLE_BRANCH: ${{ matrix.moodle_branch }}
 
       - name: Validate plugin structure
-        uses: moodlehq/moodle-plugin-ci@v5
-        with:
-          command: validate
+        if: ${{ !cancelled() }}
+        run: moodle-plugin-ci validate
 
       - name: PHP lint
-        uses: moodlehq/moodle-plugin-ci@v5
-        with:
-          command: phplint
+        if: ${{ !cancelled() }}
+        run: moodle-plugin-ci phplint
 
       - name: Mustache lint
-        uses: moodlehq/moodle-plugin-ci@v5
-        with:
-          command: mustache
+        if: ${{ !cancelled() }}
+        run: moodle-plugin-ci mustache
 
-      - name: Code checker (PHPCS)
-        uses: moodlehq/moodle-plugin-ci@v5
-        with:
-          command: codechecker
+      - name: Moodle Code Checker (PHPCS)
+        if: ${{ !cancelled() }}
+        run: moodle-plugin-ci phpcs --max-warnings 0
