@@ -24,8 +24,6 @@
 
 namespace theme_customtheme\output;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Core renderer for custom theme.
  *
@@ -36,7 +34,6 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class core_renderer extends \theme_boost\output\core_renderer {
-
     /**
      * Override to add custom footer content.
      *
@@ -73,7 +70,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         $output = \html_writer::start_div('footer-login-info text-center mt-3');
-        $output .= \html_writer::tag('small',
+        $output .= \html_writer::tag(
+            'small',
             get_string('loggedinas', 'core', fullname($USER)),
             ['class' => 'text-muted']
         );

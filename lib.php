@@ -42,9 +42,9 @@ function theme_customtheme_get_main_scss_content($theme) {
     // Load the preset from boost.
     if ($filename === 'default.scss') {
         $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/default.scss');
-    } elseif ($filename === 'plain.scss') {
+    } else if ($filename === 'plain.scss') {
         $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/plain.scss');
-    } elseif ($filename && ($presetfile = $fs->get_file($context->id, 'theme_customtheme', 'preset', 0, '/', $filename))) {
+    } else if ($filename && ($presetfile = $fs->get_file($context->id, 'theme_customtheme', 'preset', 0, '/', $filename))) {
         $scss .= $presetfile->get_content();
     } else {
         // Use default preset.

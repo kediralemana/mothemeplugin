@@ -30,5 +30,5 @@ $plugin->component = 'theme_customtheme';  // Full frankenstyle component name.
 $plugin->release   = 'v1.0.1';             // Human-readable version name.
 $plugin->maturity  = MATURITY_STABLE;      // MATURITY_ALPHA, MATURITY_BETA, MATURITY_RC or MATURITY_STABLE.
 $plugin->dependencies = [
-    'theme_boost' => 2024042200,           // Requires Boost theme (4.4).
+    'theme_boost' => 2024042200, // Requires Boost theme (4.4).
 ];
